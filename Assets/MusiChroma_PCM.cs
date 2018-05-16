@@ -56,8 +56,6 @@ namespace Assets
 
         public Vector3[] getWaves()
         {
-            try
-            {
                 // read the bytes from the stream
                 int frameSize = BUFFERSIZE;
                 var frames = new byte[frameSize];
@@ -91,10 +89,8 @@ namespace Assets
                 float height = Camera.main.orthographicSize * 2.0f;
                 float width = height * Screen.width / Screen.height;
 
-                for (int i = 0; i < length; i++)
+                for (int i = 0; i < length; i+=step)
                 {
-                    if (i % step == 0)
-                    {
                         Vector3 vec = new Vector3();
 
                         //AVG
@@ -111,16 +107,9 @@ namespace Assets
                         vec /= added;
 
                         avg.Add(vec);
-                    }
                 }
 
                 return avg.ToArray();
-            }
-            catch
-            {
-            }
-
-            return null;
         }
 
         private void dataAvailable(object sender, DataAvailableEventArgs e)
